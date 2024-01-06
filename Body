@@ -1,0 +1,39 @@
+import pandas as pd
+import yfinance as yf
+from datetime import datetime
+import matplotlib.pyplot as plt
+
+# Define stock ticker symbol and time range for analysis
+symbol = input("Enter stock symbol: ")
+
+# Start date is set at 2010 but if the range needs to be longer, the date can be changed
+start_date = "2010-01-01"
+end_date = datetime.today().strftime('%Y-%m-%d')
+
+# Retrieve stock data using the Yahoo Finance API through its data frame
+df = yf.download(symbol, start=start_date, end=end_date)
+
+# Print basic statistics on the stock data
+print("Stock Data for", symbol)
+
+print("Total number of trading days: " +str(len(df)))
+
+print("Mean closing price:" +str(round(df['Close'].mean(), 2)))
+
+print("Standard deviation of closing price: " +str(round(df['Close'].std(), 2)))
+
+# Print the lowest and highest closing prices in the since 2020
+print("Lowest closing price:" +str(round(df['Close'].min(), 2)))
+
+print("Highest closing price: " +str(round(df['Close'].max(), 2)))
+
+
+# The stock price data is displayed on a line chart
+plt.plot(df['Close'])
+
+#Labels
+plt.title(symbol + " Stock Price")
+plt.xlabel("Date")
+plt.ylabel("Price")
+
+plt.show()
